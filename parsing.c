@@ -69,6 +69,7 @@ int    parse_input(char **argv, t_data *data)
 		printf("Error: too little time\n");
 		return (0);
 	}
+	data->philo->simu_flag = 0;
     if (argv[5])
     {
 		data->not_each_philo_must_eat = ft_atol(argv[5]);
@@ -77,6 +78,8 @@ int    parse_input(char **argv, t_data *data)
 			printf("Eating count is 0: Philosophers don't have to eat\n");
 			return (0);
 		}
+		data->philo->simu_flag = 1;
 	}
+	//printf("flag: %d\n", data->simu_flag);
     return (1);
 }
