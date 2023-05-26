@@ -1,16 +1,18 @@
 #include "philo.h"
 
-t_philo *init_philo(void)
+t_philo *init_philo(char **argv)
 {
     t_philo *philo;
+    int philosophers;
 
-    philo = malloc(sizeof(philo));
+    philosophers = ft_atol(argv[1]);
+    philo = malloc(sizeof(philo) * philosophers);
     if (!philo)
         return (NULL);
     return (philo);
 }
 
-t_data *init_data(void)
+t_data *init_data(char **argv)
 {
     t_data *data;
 
@@ -19,7 +21,7 @@ t_data *init_data(void)
 		return (NULL);
     pthread_mutex_init(&data->left_fork, NULL);
     pthread_mutex_init(&data->right_fork, NULL);
-    data->philo = init_philo();
+    data->philo = init_philo(argv);
     if (data->philo == NULL)
     {
         printf("Error during allocation\n");
