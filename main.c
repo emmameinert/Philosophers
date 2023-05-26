@@ -20,26 +20,24 @@
 void   start_routine(char **argv, t_data *data)
 {
     int i;
-    //long timestamp;
-    i = 1;
+    i = 0;
 
     if (!parse_input(argv, data))
         return ;
-    // pthread_t th[data->philosopher];
-    // while (i <= data->philosopher)
-    // {
-    //     if (pthread_create(th + i , NULL, &routine, NULL) != 0)
-    //     {
-    //         printf("error with thread creation \n");
-    //         return 1;
-    //     }
-    //     if (i == 1)
-    //     {
-    //         data->philo->start_time = get_time();
-    //         printf("2. : %ld\n", data->philo->start_time);
-    //     }
-    //     i++;
-    // }
+    while (i < data->philosopher)
+    {
+        data->philo[i].th = malloc(sizeof(data->philosopher));
+        data->philo->id = i;
+        pthread_mutex_init(&data->mutex, NULL);
+        if (pthread_create(data->philo[i].th, NULL, &routine, data->philo) != 0) 
+        {
+            printf("error with thread creation \n");
+            return ;
+            //need to differ between even and odd philosopher for the eating and thinking
+        }
+        i++;
+    }
+    pthread_mutex_destroy(&data->mutex);
 
 }
 
@@ -58,7 +56,7 @@ int main(int argc, char **argv)
         printf("Error: Wrong arguments\n");
         return (0);
     }
-    data = init_data();
+    data = init_data(argv);
     if (data == NULL)
     {
         printf("Error during allocation\n");
@@ -69,6 +67,5 @@ int main(int argc, char **argv)
     // let monitoring script run the whole time of the program and compare and see if someone died  //pthread_mutex_destroy(&mutex);
     free(data->philo);
     free(data);
-    printf("%s HELLO\n", RED);
     return (0);
 }
