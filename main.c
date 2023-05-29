@@ -1,44 +1,30 @@
 #include "philo.h"
 
-// void*  routine(void *philo)
-// {
-//     t_philo *temp;
-
-//     temp = (t_philo *)philo;
-//     int i;
-//     i = 0;
-//     while (i < 10000000) //??
-//     {
-//         // pthread_mutex_lock(&mutex);
-//         // //eaten++;
-//         // pthread_mutex_unlock(&mutex);
-//         i++;
-//     }
-//     return (eaten);
-// } 
-
 void   start_routine(char **argv, t_data *data)
 {
     int i;
     i = 0;
 
-    if (!parse_input(argv, data))
+    if (!parse_input(argv, data)) //check this before init data 
         return ;
+    pthread_mutex_lock(&data->mutex);
     while (i < data->philosopher)
     {
-        data->philo[i].th = malloc(sizeof(data->philosopher));
+        printf("hello\n");
+        // data->philo[i].th = malloc(sizeof(data->philosopher));
         data->philo->id = i;
-        pthread_mutex_init(&data->mutex, NULL);
-        if (pthread_create(data->philo[i].th, NULL, &routine, data->philo) != 0) 
+        if (pthread_create(&data->philo[i].th, NULL, &routine, NULL) != 0) //maybe double pointer for data
         {
             printf("error with thread creation \n");
             return ;
             //need to differ between even and odd philosopher for the eating and thinking
+        
         }
+        //joooooin
+        printf("i: %d\n", i);
         i++;
     }
-    pthread_mutex_destroy(&data->mutex);
-
+    pthread_mutex_unlock(&data->mutex);
 }
 
 
