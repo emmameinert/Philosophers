@@ -39,7 +39,7 @@ typedef struct s_philo
     long long time_to_eat;
     long long time_to_sleep;
     int id;
-    pthread_t *th;
+    pthread_t th;
     t_data *data;
 }t_philo;
 
