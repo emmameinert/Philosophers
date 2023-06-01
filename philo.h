@@ -1,6 +1,5 @@
-
 #ifndef PHILO_H
-#   define PHILO_H
+    #define PHILO_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,51 +15,48 @@
 #define GREEN	"\e[32m"
 
 typedef struct s_data t_data;
-
 typedef struct s_philo t_philo;
 
 typedef struct s_data
 {
-    int     philosopher;
-    int     forks[2];
-    int     not_each_philo_must_eat;
-    int     eating_count;
+    pthread_mutex_t eating_lock;
+    pthread_t    monitoring;
     pthread_mutex_t left_fork;
     pthread_mutex_t right_fork;
-    pthread_mutex_t mutex;
-    t_philo *philo;
+    time_t  start_time;
+    long long     philo_nb;
+    long  long    not_each_philo_must_eat;
+    long long     simu_flag;
 }t_data;
 
 typedef struct s_philo
 {
-    int     simu_flag;
-    long long start_time;
-    long long time_to_die;
-    long long time_to_eat;
-    long long time_to_sleep;
-    int id;
-    pthread_t th;
+    pthread_t ph_thread;
+    pthread_mutex_t eating_mutex;
+    time_t  time_to_eat;
+    time_t time_to_sleep;
+    time_t time_to_die;
     t_data *data;
+    int id;
 }t_philo;
 
+
 //input
-int check_input(int argc, char **argv);
-t_data *init_data(char **argv);
-t_philo *init_philo(char **argv);
-int    parse_input(char **argv, t_data *data);
-int	ft_isdigit(int c);
+long long	ft_atol(const char *str);
+int         check_input(int argc, char **argv);
+int	        ft_isdigit(int c);
+void        parsing(t_data *data, char **argv, t_philo **philo);
+t_philo     **init_philo(char **argv, t_data *data);
+t_data      *init_data(void);
+//routine
+
+t_data  *init_all(void);
+void    start_routine(t_philo **philo);
+void*   routine(void *philo);
 
 //time
-long long   get_time();
-long long   time_diff(t_philo *philo);
 
-//routines
-void   start_routine(char **argv, t_data *data);
-void*  routine(void *data);
+//philo
 
-//utils
-
-long long	ft_atol(const char *str);
-void        my_sleep();
 
 #endif
