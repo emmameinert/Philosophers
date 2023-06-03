@@ -1,16 +1,16 @@
 #include "philo.h"
 
-long convert_time()
+long long get_time()
 {
     long ms;
     struct timeval tv;
+
     gettimeofday(&tv, NULL);
     ms = (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000;
-    //printf("1. : %ld\n", ms);
     return (ms);
 }
 
-long    time_diff(t_philo *philo)
+long long   time_diff(long long past)
 {
     long ms;
     long diff;
@@ -18,6 +18,6 @@ long    time_diff(t_philo *philo)
 
     gettimeofday(&tv, NULL);
     ms = (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000;
-    diff = ms - philo->start_time;
+    diff = ms - past;
     return (diff);
 }
