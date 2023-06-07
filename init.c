@@ -14,7 +14,11 @@ t_philo **init_philo(char **argv, t_data *data)
     while (i < philosophers)
     {
         philo[i] = malloc(sizeof(t_philo) * 1);
-        //check fehlt
+        if (!philo[i])
+        {
+            while (--i > 0)
+                free(philo[i]);
+        }
         philo[i]->data = data;
         pthread_mutex_init(&((philo[i])->eating_mutex), NULL);
         i++;
@@ -35,13 +39,13 @@ t_data *init_data(void)
 t_data *init_all(void)
 {
     t_data *data;
+    int i;
 
+    i = 0;
     data = init_data();
     if (data == NULL)   
         return (NULL);
     pthread_mutex_init(&(data->eating_lock), NULL);
-    pthread_mutex_init(&(data->left_fork), NULL);
-    pthread_mutex_init(&(data->right_fork), NULL);
     pthread_mutex_init(&(data->printing), NULL);
     pthread_mutex_init(&(data->eating_count_lock), NULL);
     pthread_mutex_init(&(data->death_lock), NULL);
