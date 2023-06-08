@@ -1,6 +1,6 @@
 #include "philo.h"
 
-int   comp_eat_count(t_philo *philo) //what do i do if i dont have an eating count
+int   comp_eat_count(t_philo *philo)  //combine death and eating count function 
 {
     pthread_mutex_lock(&(philo->data->eating_count_lock));
     if (philo->data->not_each_philo_must_eat < 0)
@@ -50,18 +50,12 @@ void*    routine(void *philo)
     i = 0;
     temp = (t_philo *)philo;
     if ((temp->id % 2) == 0)
-        usleep(1500);//might wanna let them think here
-    while (!comp_eat_count(temp))// && //without death checks !death_check(&temp), wenn death check draussen ist bricht das prpgramm mitm zweiten philo ab
-    {//what if i dont have a not_each_philo_must_eat
+        usleep(500);
+    while (!comp_eat_count(temp)) // schreib die funkt um und check auch fürn Tod
+    {
         eat_routine(temp);
-        // if (comp_eat_count(temp) == 1)
-        // {
-        //     return (NULL);
-        // }
         print_message((temp->data), time_diff(temp->data->start_time), temp->id, 't');
-        // i++; //ich gkaub das funktioniert noch nicht so ganz so, brauch dafuer ggf ne externe monitor function
     }
-           // stop_routine(philo); //stophat probleme take out and only access in main one
     printf("%ld\n", temp[i].last_meal);
     return (NULL);
 }
@@ -77,8 +71,7 @@ void    stop_routine(t_philo **philo)
             return ;
         i++;
     }
-    // pthread_mutex_destroy(&((*philo)->data->left_fork));
-    // pthread_mutex_destroy(&((*philo)->data->right_fork));
+    //destroy hier alle fork mutexes in a while loop
     pthread_mutex_destroy(&((*philo)->data->printing));
     pthread_mutex_destroy(&((*philo)->data->eating_count_lock));
     pthread_mutex_destroy(&((*philo)->data->death_lock));
@@ -106,5 +99,4 @@ void    start_routine(t_philo **philo)
     pthread_mutex_unlock(&((*philo)->data->eating_lock));
 }
 
-//what happens with one philosopher edge case
 
