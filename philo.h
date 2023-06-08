@@ -66,7 +66,7 @@ int     death_check(t_philo **philo);
 //time
 
 long long   get_time();
-long long   time_diff(long long past);
+long long   time_diff(long long pres, long long past);
 void        my_sleep(t_philo *philo);
 
 //output

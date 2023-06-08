@@ -37,11 +37,15 @@ long long	ft_atol(const char *str)
 	return (result);
 }
 
-//my own sleeping function
-// void    my_sleep()
-// {
-//     //get time
-//     //see how long need to sleep
-//     //usleep(500)
-//     return ;
-// }
+void    my_sleep(t_philo *philo)
+{
+    long long time;
+	time = get_time();
+	// while (//death_check)
+	// {
+		if (time_diff(time, get_time()) >= philo->time_to_sleep)
+			break ;
+		usleep(50);
+	// }
+    return ;
+}
