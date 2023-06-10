@@ -19,14 +19,14 @@ typedef struct s_philo t_philo;
 
 typedef struct s_data
 {
-    pthread_mutex_t eating_lock;
     pthread_mutex_t eating_count_lock;
     pthread_mutex_t death_lock;
+    pthread_mutex_t routine_lock;
     pthread_t    monitoring;
     pthread_mutex_t printing;
     time_t  start_time;
     long long     philo_nb;
-    pthread_mutex_t fork[philo_nb];
+    pthread_mutex_t *fork;
     long  long    not_each_philo_must_eat;
     long long     simu_flag;
     int           eating_count;
@@ -62,12 +62,13 @@ void*   routine(void *philo);
 void    eat_routine(t_philo *philo);
 int     comp_eat_count(t_philo *philo);
 void    stop_routine(t_philo **philo);
-int     death_check(t_philo **philo);
+int     death_check(t_philo *philo);
+int     life_status(t_philo **philo);
 //time
 
 long long   get_time();
 long long   time_diff(long long pres, long long past);
-void        my_sleep(t_philo *philo);
+void        my_sleep(time_t count);
 
 //output
 void    print_message(t_data *data, time_t time, int id, char message);
