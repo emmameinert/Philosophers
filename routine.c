@@ -1,63 +1,26 @@
 #include "philo.h"
 
-int   comp_eat_count(t_philo *philo)  //combine death and eating count function 
-{
-    pthread_mutex_lock(&(philo->data->eating_count_lock));
-    if (philo->data->not_each_philo_must_eat < 0)
-    {
-        pthread_mutex_unlock(&(philo->data->eating_count_lock));
-        return (0);
-    }
-    else if (philo->data->eating_count < philo->data->not_each_philo_must_eat)
-    {
-        pthread_mutex_unlock(&(philo->data->eating_count_lock));
-        return (0);
-    }
-    else if (philo->data->eating_count == philo->data->not_each_philo_must_eat)
-    {
-        pthread_mutex_unlock(&(philo->data->eating_count_lock));
-        return (1);
-    }
-    return (0);
-}
-
 void    eat_routine(t_philo *philo)
 {
     t_philo *temp;
+    t_data *data;
 
     temp = (t_philo *)philo;
-    // pthread_mutex_lock(&(temp->data->left_fork)); //fork array. check with less mutexes
-    print_message((temp->data), time_diff(temp->data->start_time), temp->id, 'f');
-    // pthread_mutex_lock(&(temp->data->right_fork));
-    print_message((temp->data), time_diff(temp->data->start_time), temp->id, 'f');
-    temp->last_meal = time_diff(temp->data->start_time);
+    data = temp->data;
+    pthread_mutex_lock((temp->left_fork));
+    print_message((temp->data), time_diff(get_time(), temp->data->start_time), temp->id, 'f');
+    pthread_mutex_lock((temp->right_fork));
+    print_message((temp->data), time_diff(get_time(), temp->data->start_time), temp->id, 'f');
+    temp->last_meal = time_diff(get_time(), temp->data->start_time);
     print_message((temp->data), temp->last_meal, temp->id, 'e');
     pthread_mutex_lock(&(temp->eating_mutex)); 
     temp->data->eating_count++;
     pthread_mutex_unlock(&(temp->eating_mutex));
-    temp->sleep_start = time_diff(temp->data->start_time);
+    temp->sleep_start = time_diff(get_time(), temp->data->start_time);
     print_message((temp->data), temp->sleep_start, temp->id, 's');
-    my_sleep(philo); 
-    // pthread_mutex_unlock(&(temp->data->left_fork));
-    // pthread_mutex_unlock(&(temp->data->right_fork));
-}
-
-void*    routine(void *philo)
-{
-    t_philo *temp;
-    int i;
-
-    i = 0;
-    temp = (t_philo *)philo;
-    if ((temp->id % 2) == 0)
-        usleep(500);
-    while (!comp_eat_count(temp)) // schreib die funkt um und check auch fürn Tod
-    {
-        eat_routine(temp);
-        print_message((temp->data), time_diff(temp->data->start_time), temp->id, 't');
-    }
-    printf("%ld\n", temp[i].last_meal);
-    return (NULL);
+    my_sleep(temp->time_to_sleep); 
+    pthread_mutex_unlock((temp->left_fork));
+    pthread_mutex_unlock((temp->right_fork));
 }
 
 void    stop_routine(t_philo **philo)
@@ -71,19 +34,41 @@ void    stop_routine(t_philo **philo)
             return ;
         i++;
     }
-    //destroy hier alle fork mutexes in a while loop
+    i = 0;
+    while (i < (*philo)->data->philo_nb)
+    {
+        pthread_mutex_destroy(&((*philo)->data->fork[i]));
+    }
     pthread_mutex_destroy(&((*philo)->data->printing));
     pthread_mutex_destroy(&((*philo)->data->eating_count_lock));
     pthread_mutex_destroy(&((*philo)->data->death_lock));
 }
 
-void    start_routine(t_philo **philo)
+
+void*   routine(void *philo)
 {
+    t_philo *temp;
     int i;
 
     i = 0;
-    pthread_mutex_lock(&((*philo)->data->eating_lock));
-    (*philo)->data->eating_count = 0; 
+    temp = (t_philo *)philo;
+    if ((temp->id % 2) == 0)
+        usleep(1500);
+    while (!life_status(&temp))
+    {
+        eat_routine(temp);
+        print_message((temp->data), time_diff(get_time(), temp->data->start_time), temp->id, 't');
+    }
+    printf("%ld\n", temp[i].last_meal);
+    return (NULL);
+}
+
+void    start_routine(t_philo **philo)
+{
+    int i;
+    i = 0;
+    pthread_mutex_lock(&((*philo)->data->routine_lock));
+    (*philo)->data->eating_count = 0;
     while (i < (*philo)->data->philo_nb)
     {
         philo[i]->id = i + 1;
@@ -93,10 +78,7 @@ void    start_routine(t_philo **philo)
             return ;
         }
         i++;   
-    }
-    death_check(philo);
+    }//ggf nochmal life_status checken
     stop_routine(philo);
-    pthread_mutex_unlock(&((*philo)->data->eating_lock));
+    pthread_mutex_unlock(&((*philo)->data->routine_lock));
 }
-
-
