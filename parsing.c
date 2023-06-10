@@ -1,85 +1,41 @@
 #include "philo.h"
 
-int	ft_isdigit(int c)
-{
-	int	answer;
-
-	answer = 0;
-	if (c >= 48 && c <= 57)
-		answer = 1;
-	else
-		answer = 0;
-	return (answer);
-}
-
-static int	ft_is_number(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (!str)
-		return (1);
-	if (str[i] == '+')
-		i++;
-	while (str[i] != '\0')
-	{
-		if (!ft_isdigit(str[i]))
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-static int ft_is_negative(char c)
-{
-    if (c == '-')
-        return (1);
-    else
-        return(0);
-}
-
-int    check_input(int argc, char **argv)
+void    parsing(t_data *data, char **argv, t_philo **philo)
 {
     int i;
-
-    i = 1;
-    while (i < (argc))
+    
+    i = 0;
+    data->philo_nb = ft_atol(argv[1]);
+    data->fork = malloc(sizeof(pthread_mutex_t) * (data->philo_nb));
+    if (!data->fork)
+        return ;
+    while (i < data->philo_nb)
     {
-		if (ft_is_negative(argv[i][0]) || ft_is_number(argv[i]))
-        	return (1);
-		i++;
-	}
-    return (0);
-}
-
-int    parse_input(char **argv, t_data *data)
-{
-    data->philosopher = ft_atol(argv[1]);
-	if (data->philosopher > 200 || data->philosopher == 0)
-	{
-		printf("Error: wrong amount of Philosophers\n");
-		return (0);
-	}
-    data->philo->time_to_die = ft_atol(argv[2]);
-    data->philo->time_to_eat = ft_atol(argv[3]);
-    data->philo->time_to_sleep = ft_atol(argv[4]);
-	if ((data->philo->time_to_die < 60) || (data->philo->time_to_eat < 60) 
-		|| (data->philo->time_to_sleep < 60))
-	{
-		printf("Error: too little time\n");
-		return (0);
-	}
-	data->philo->simu_flag = 0;
-    if (argv[5])
+        philo[i]->time_to_die = ft_atol(argv[2]);
+        philo[i]->time_to_eat = ft_atol(argv[3]);
+        philo[i]->time_to_sleep = ft_atol(argv[4]);
+        pthread_mutex_init(&(data->fork[i]), NULL);
+        i++;
+    }
+    i = 0;
+    while (i < data->philo_nb)
     {
-		data->not_each_philo_must_eat = ft_atol(argv[5]);
-		if (data->not_each_philo_must_eat == 0)
-		{
-			printf("Eating count is 0: Philosophers don't have to eat\n");
-			return (0);
-		}
-		data->philo->simu_flag = 1;
-	}
-	//printf("flag: %d\n", data->simu_flag);
-    return (1);
+        if (i == data->philo_nb - 1)
+        {
+            philo[i]->left_fork = &data->fork[i];
+            philo[i]->right_fork = philo[0]->left_fork; //passt das so?
+        }
+        else
+        {
+            philo[i]->left_fork = &data->fork[i];
+            philo[i]->right_fork = &data->fork[i + 1];
+        }
+        i++;
+    }
+    if(argv[5])
+    {
+        data->not_each_philo_must_eat = ft_atol(argv[5]);
+    }
+    else
+        data->not_each_philo_must_eat = -1;
 }
