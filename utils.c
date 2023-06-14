@@ -15,6 +15,18 @@ static long long	ft_check_char(const char *str, int i, long sign, long result)
 	}
 	return (sign * result);
 }
+// void    free_struct(t_philo **philo, long philo_nb)
+// {
+//     int i;
+    
+//     i = 0;
+//     while (i < philo_nb)
+//     {
+//         free(philo[i]);
+//         i++;
+//     }
+//     free(philo);
+// }
 
 long long	ft_atol(const char *str)
 {
@@ -37,15 +49,16 @@ long long	ft_atol(const char *str)
 	return (result);
 }
 
-void    my_sleep(t_philo *philo)
+
+int    my_sleep(time_t count, t_philo **philo)
 {
     long long time;
 	time = get_time();
-	// while (//death_check)
-	// {
-		if (time_diff(time, get_time()) >= philo->time_to_sleep)
-			break ;
-		usleep(50);
-	// }
-    return ;
+	while (life_status(philo) == 0)
+	{
+		usleep(10);
+		if (time_diff(get_time(), time) >= count)
+			return (life_status(philo));
+	}
+    return (life_status(philo));
 }

@@ -1,10 +1,11 @@
 NAME = philo
 
-SRC = philo time
+SRC = main input utils parsing init routine time output life_status
 
 HEADER = philo.h
 
-CC = cc -fsanitize=thread -g
+CC = cc 
+#-fsanitize=thread -g
 
 CFLAGS = -Wall -Wextra -Werror -I $(HEADER)
 
