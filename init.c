@@ -1,47 +1,63 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emeinert <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/20 15:59:32 by emeinert          #+#    #+#             */
+/*   Updated: 2023/06/20 16:04:08 by emeinert         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
-t_philo *init_philo(int count)
+t_philo	*init_philo(int count)
 {
-    t_philo *philo;
-    int i;
+	t_philo	*philo;
+	int		i;
 
-    i = 0;
-    philo = malloc(sizeof(*philo) * count); 
-    if (!philo)
-        return (NULL);
-    return (philo);
+	i = 0;
+	philo = malloc(sizeof(*philo) * count + 1);
+	if (!philo)
+		return (NULL);
+	return (philo);
 }
 
-
-t_data *init_data(char **argv)
+t_data	*init_data(char **argv)
 {
-    t_data *data;
+	t_data	*data;
 
-    data = malloc(sizeof((*data)));
-    if (!data)
-        return (NULL);
-    data->philo_nb = ft_atol(argv[1]);
-    data->philo = init_philo(data->philo_nb);
-    init_mutex(&data);
-    return (data);
+	data = malloc(sizeof((*data)) * 1);
+	if (!data)
+		return (NULL);
+	data->philo_nb = ft_atol(argv[1]);
+	data->philo = init_philo(data->philo_nb);
+	init_mutex(data);
+	return (data);
 }
 
-void    init_mutex(t_data **data)
+int	init_mutex(t_data *data)
 {
-    if (pthread_mutex_init(&((*data)->printing), NULL) != 0)
-    {
-        printf("Error mutex init\n");
-    }
-    if (pthread_mutex_init(&((*data)->eating_count_lock), NULL) != 0)
-    {
-        printf("Error mutex init\n");
-    }
-    if (pthread_mutex_init(&((*data)->death_lock), NULL) != 0)
-    {
-        printf("Error mutex init\n");
-    }
-    if (pthread_mutex_init(&((*data)->routine_lock), NULL) != 0)
-    {
-        printf("Error mutex init\n");
-    }
+	if (pthread_mutex_init(&(data->printing), NULL) != 0)
+	{
+		printf("Error mutex init\n");
+		return (1);
+	}
+	if (pthread_mutex_init(&(data->eating_count_lock), NULL) != 0)
+	{
+		printf("Error mutex init\n");
+		return (1);
+	}
+	if (pthread_mutex_init(&(data->death_lock), NULL) != 0)
+	{
+		printf("Error mutex init\n");
+		return (1);
+	}
+	if (pthread_mutex_init(&(data->routine_lock), NULL) != 0)
+	{
+		printf("Error mutex init\n");
+		return (1);
+	}
+	return (0);
 }

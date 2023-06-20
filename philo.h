@@ -27,7 +27,8 @@ typedef struct s_data
     pthread_mutex_t *fork;
     long  long    not_each_philo_must_eat;
     int           general_eating_count;
-    t_philo     *philo;
+    int            death_flag;
+    t_philo         *philo;
 }  t_data;
 
 typedef struct s_philo
@@ -40,8 +41,9 @@ typedef struct s_philo
     long long  time_to_sleep;
     long long  time_to_die;
     unsigned long long  last_meal;
-    unsigned long long old_time;
+    unsigned long long  old_meal;
     long long  sleep_start;
+    int            eating_flag;
     t_data *data;
     int own_eating_count;
     int id;
@@ -57,22 +59,23 @@ t_data      *init_data(char **argv);
 void        init_forks(t_data **data);
 //routine
 
-void    init_mutex(t_data **data);
-void    start_routine(t_data **data);
+int    init_mutex(t_data *data);
+int     start_routine(t_data **data);
 void*   routine(void *philo);
-void    eat_routine(t_philo *philo);
-int     comp_eat_count(t_philo **philo); 
-void    stop_routine(t_data **data);
-int     death_check(t_philo **philo);
-int     life_status(t_philo **philo);
+int     eat_routine(t_philo *philo);
+int     comp_eat_count(t_philo *philo); 
+int     death_check(t_philo *philo);
+int     life_status(t_philo *philo);
+void    monitoring(t_data **data);
+void    one_philo(t_philo *philo);
 //time
 
-unsigned long long get_time();
-long long   time_diff(unsigned long long pres, unsigned long long past);
-int         my_sleep(time_t count, t_philo **philo);
-void        my_wait(t_philo *philo);
+unsigned long long  get_time();
+long long           time_diff(unsigned long long pres, unsigned long long past);
+int                 my_sleep(time_t count, t_philo **philo);
 //output
-void    print_message(t_data *data, time_t time, int id, char message);
-void    free_struct(t_philo **philo, long philo_nb);
+int                print_message(t_data *data, time_t time, int id, char message);
+void	           destroy_mutex(t_data *data);
+
 
 #endif

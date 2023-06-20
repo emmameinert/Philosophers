@@ -2,8 +2,8 @@
 
 unsigned long long get_time()
 {
-    struct timeval tv;
-    unsigned long long ms;
+    struct timeval  tv;
+    unsigned long long  ms;
 
     ms = 0;
     if (gettimeofday(&tv, NULL) == 0)

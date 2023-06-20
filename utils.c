@@ -15,18 +15,6 @@ static long long	ft_check_char(const char *str, int i, long sign, long result)
 	}
 	return (sign * result);
 }
-// void    free_struct(t_philo **philo, long philo_nb)
-// {
-//     int i;
-    
-//     i = 0;
-//     while (i < philo_nb)
-//     {
-//         free(philo[i]);
-//         i++;
-//     }
-//     free(philo);
-// }
 
 long long	ft_atol(const char *str)
 {
@@ -50,15 +38,44 @@ long long	ft_atol(const char *str)
 }
 
 
-int    my_sleep(time_t count, t_philo **philo)
+int	my_sleep(time_t count, t_philo **philo)
 {
     long long time;
 	time = get_time();
-	while (life_status(philo) == 0)
+	while (death_check(*philo) == 0)
 	{
-		usleep(10);
+		usleep(300);
 		if (time_diff(get_time(), time) >= count)
-			return (life_status(philo));
+			return (0);
 	}
-    return (life_status(philo));
+	return (1);
+}
+
+void	destroy_mutex(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->philo_nb)
+	{
+		pthread_detach(data->philo[i].ph_thread);
+		i++;
+	}
+	if (&(data->printing))
+		pthread_mutex_destroy(&(data->printing));
+	if (&(data->eating_count_lock))
+		pthread_mutex_destroy(&(data->eating_count_lock));
+	if (&(data->death_lock))
+		pthread_mutex_destroy(&(data->death_lock));
+	if (&(data->routine_lock))
+		pthread_mutex_destroy(&(data->routine_lock));
+	i = 0;
+	while (i < data->philo_nb)
+	{
+		if (&(data->fork[i]))
+			pthread_mutex_destroy(&data->fork[i]);
+		if (&(data->philo[i].eating_mutex))
+			pthread_mutex_destroy(&data->philo[i].eating_mutex);
+		i++;
+	}
 }

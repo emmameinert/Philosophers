@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   input.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emeinert <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/20 16:04:19 by emeinert          #+#    #+#             */
+/*   Updated: 2023/06/20 16:07:34 by emeinert         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	ft_isdigit(int c)
@@ -30,31 +42,31 @@ static int	ft_is_number(char *str)
 	return (0);
 }
 
-static int ft_is_negative(char c)
+static int	ft_is_negative(char c)
 {
-    if (c == '-')
-        return (1);
-    else
-        return(0);
+	if (c == '-')
+		return (1);
+	else
+		return (0);
 }
 
-int    check_input(int argc, char **argv)
+int	check_input(int argc, char **argv)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (++i < (argc))
-    {
+	i = 0;
+	while (++i < (argc))
+	{
 		if (ft_is_negative(argv[i][0]) || ft_is_number(argv[i]))
-        	return (1);
+			return (1);
 	}
-    if (ft_atol(argv[1]) > 200 || ft_atol(argv[1]) == 0)
+	if (ft_atol(argv[1]) > 200 || ft_atol(argv[1]) == 0)
 	{
 		printf("Error: wrong amount of Philosophers\n");
 		return (1);
 	}
-    if ((ft_atol(argv[2])  < 60) || (ft_atol(argv[3])  < 60) 
-		|| (ft_atol(argv[4])  < 60)) //add veryyyy large number flag
+	if ((ft_atol(argv[2]) < 60) || (ft_atol(argv[3]) < 60)
+		|| (ft_atol(argv[4]) < 60))
 	{
 		printf("Error: too little time\n");
 		return (1);
@@ -64,5 +76,5 @@ int    check_input(int argc, char **argv)
 		printf("Eating count is 0: Philosophers don't have to eat\n");
 		return (1);
 	}
-    return (0);
+	return (0);
 }

@@ -1,9 +1,10 @@
 #include "philo.h"
 
-void    print_message(t_data *data, time_t time, int id, char message)
+int    print_message(t_data *data, time_t time, int id, char message)
 {
     pthread_mutex_lock(&data->printing);
-    //double check everytime if somebody has died
+    if (death_check(&(data->philo[id - 1])) == 1)
+        return (1);
     if (message == 'f')
     {
         printf("%s%ld %d %s",YELLOW, time, id, "has taken a fork\n");
@@ -20,10 +21,6 @@ void    print_message(t_data *data, time_t time, int id, char message)
     {
         printf("%s%ld %d %s", GREEN, time, id, "is thinking\n");
     }
-    else if (message == 'd')
-    {
-        printf("%s%ld %d %s", RED, time, id, "died\n");
-    }
     pthread_mutex_unlock(&data->printing);
-    return ;
+    return (0);
 }
