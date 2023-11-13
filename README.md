@@ -1,4 +1,4 @@
-## Philophers
+## Philophers - A multithreading Hive project
 
 Philosophers is a slightly changed project about the [known dining philosophers problem](https://en.wikipedia.org/wiki/Dining_philosophers_problem). 
 Each philospher comes with one fork to a table. Everybody can only eat with a left and a right fork, otherwise the philosopher thinks or sleeps. 
