@@ -5,6 +5,8 @@ Each philospher comes with one fork to a table. Everybody can only eat with a le
 The philosophers can not talk to each other and don't know what the others are doing.
 The focus of the project is to build a simulation of this problem with certain parameters given by the user, without running into a deadlock.
 
+[<img width="226" alt="Screen Shot 2023-11-13 at 1 05 35 PM" src="https://github.com/emmameinert/Philo/assets/110816436/5da68db5-c468-45bf-a77c-e14b842562d2">](https://en.wikipedia.org/wiki/Dining_philosophers_problem#/media/File:An_illustration_of_the_dining_philosophers_problem.png)
+
 ## Arguments
 
 number_of_philosophers
