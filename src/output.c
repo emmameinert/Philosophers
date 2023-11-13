@@ -6,11 +6,11 @@
 /*   By: emeinert <emeinert@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:48:57 by emeinert          #+#    #+#             */
-/*   Updated: 2023/06/21 21:05:38 by emeinert         ###   ########.fr       */
+/*   Updated: 2023/11/13 12:48:12 by emeinert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../header/philo.h"
 
 int	print_message(t_data *data, time_t time, int id, char message)
 {

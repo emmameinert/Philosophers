@@ -6,11 +6,11 @@
 /*   By: emeinert <emeinert@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:07:59 by emeinert          #+#    #+#             */
-/*   Updated: 2023/06/21 21:04:34 by emeinert         ###   ########.fr       */
+/*   Updated: 2023/11/13 12:48:10 by emeinert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../header/philo.h"
 
 int	life_status(t_philo *philo)
 {

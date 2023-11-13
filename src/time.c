@@ -6,11 +6,11 @@
 /*   By: emeinert <emeinert@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:09:55 by emeinert          #+#    #+#             */
-/*   Updated: 2023/06/21 21:12:50 by emeinert         ###   ########.fr       */
+/*   Updated: 2023/11/13 12:48:50 by emeinert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../header/philo.h"
 
 long long	get_time(void)
 {

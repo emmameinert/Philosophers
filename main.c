@@ -6,11 +6,11 @@
 /*   By: emeinert <emeinert@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:44:03 by emeinert          #+#    #+#             */
-/*   Updated: 2023/06/21 21:14:09 by emeinert         ###   ########.fr       */
+/*   Updated: 2023/11/13 12:49:35 by emeinert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "header/philo.h"
 
 void	monitoring(t_data **data)
 {

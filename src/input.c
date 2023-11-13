@@ -6,11 +6,11 @@
 /*   By: emeinert <emeinert@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:04:19 by emeinert          #+#    #+#             */
-/*   Updated: 2023/06/22 10:48:37 by emeinert         ###   ########.fr       */
+/*   Updated: 2023/11/13 12:48:07 by emeinert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../header/philo.h"
 
 int	ft_isdigit(int c)
 {

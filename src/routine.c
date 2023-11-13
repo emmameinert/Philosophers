@@ -6,11 +6,11 @@
 /*   By: emeinert <emeinert@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:14:36 by emeinert          #+#    #+#             */
-/*   Updated: 2023/06/21 21:16:20 by emeinert         ###   ########.fr       */
+/*   Updated: 2023/11/13 12:48:48 by emeinert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../header/philo.h"
 
 int	take_forks(t_philo **philo)
 {

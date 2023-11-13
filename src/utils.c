@@ -6,11 +6,11 @@
 /*   By: emeinert <emeinert@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:11:39 by emeinert          #+#    #+#             */
-/*   Updated: 2023/06/22 10:24:22 by emeinert         ###   ########.fr       */
+/*   Updated: 2023/11/13 12:48:53 by emeinert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../header/philo.h"
 
 static long long	ft_check(const char *str, int i, long sign, long result)
 {

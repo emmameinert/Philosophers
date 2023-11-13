@@ -6,11 +6,11 @@
 /*   By: emeinert <emeinert@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:59:32 by emeinert          #+#    #+#             */
-/*   Updated: 2023/06/21 18:36:43 by emeinert         ###   ########.fr       */
+/*   Updated: 2023/11/13 12:47:58 by emeinert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../header/philo.h"
 
 t_philo	*init_philo(int count)
 {

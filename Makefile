@@ -1,8 +1,8 @@
 NAME = philo
 
-SRC = main input utils parsing init routine time output life_status
+SRC = main ./src/input ./src/utils ./src/parsing ./src/init ./src/routine ./src/time ./src/output ./src/life_status
 
-HEADER = philo.h
+HEADER = ./header/philo.h
 
 CC = cc
 
