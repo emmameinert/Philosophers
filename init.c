@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emeinert <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: emeinert <emeinert@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:59:32 by emeinert          #+#    #+#             */
-/*   Updated: 2023/06/20 16:04:08 by emeinert         ###   ########.fr       */
+/*   Updated: 2023/06/21 18:36:43 by emeinert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_philo	*init_philo(int count)
 	int		i;
 
 	i = 0;
-	philo = malloc(sizeof(*philo) * count + 1);
+	philo = malloc(sizeof(*philo) * (count + 1));
 	if (!philo)
 		return (NULL);
 	return (philo);
