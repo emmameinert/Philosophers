@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emeinert <emeinert@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/21 19:11:39 by emeinert          #+#    #+#             */
+/*   Updated: 2023/06/22 10:24:22 by emeinert         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
-static long long	ft_check_char(const char *str, int i, long sign, long result)
+static long long	ft_check(const char *str, int i, long sign, long result)
 {
 	while (str[i] >= '0' && str[i] <= '9')
 	{
@@ -9,7 +21,7 @@ static long long	ft_check_char(const char *str, int i, long sign, long result)
 		result = result * 10 + (str[i] - '0');
 		i++;
 		if (sign * result > 2147483647)
-			return (2147483648);
+			return (-2147483649);
 		if (sign * result < -2147483648)
 			return (-21474836489);
 	}
@@ -33,14 +45,14 @@ long long	ft_atol(const char *str)
 		if (!ft_isdigit(str[i]))
 			return (result);
 	}
-	result = ft_check_char(str, i, sign, result);
+	result = ft_check(str, i, sign, result);
 	return (result);
 }
 
-
 int	my_sleep(time_t count, t_philo **philo)
 {
-    long long time;
+	long long	time;
+
 	time = get_time();
 	while (death_check(*philo) == 0)
 	{
@@ -58,7 +70,10 @@ void	destroy_mutex(t_data *data)
 	i = 0;
 	while (i < data->philo_nb)
 	{
-		pthread_detach(data->philo[i].ph_thread);
+		if (&(data->fork[i]))
+			pthread_mutex_destroy(&data->fork[i]);
+		if (&(data->philo[i].eating_mutex))
+			pthread_mutex_destroy(&data->philo[i].eating_mutex);
 		i++;
 	}
 	if (&(data->printing))
@@ -69,13 +84,4 @@ void	destroy_mutex(t_data *data)
 		pthread_mutex_destroy(&(data->death_lock));
 	if (&(data->routine_lock))
 		pthread_mutex_destroy(&(data->routine_lock));
-	i = 0;
-	while (i < data->philo_nb)
-	{
-		if (&(data->fork[i]))
-			pthread_mutex_destroy(&data->fork[i]);
-		if (&(data->philo[i].eating_mutex))
-			pthread_mutex_destroy(&data->philo[i].eating_mutex);
-		i++;
-	}
 }
