@@ -4,7 +4,7 @@ SRC = main input utils parsing init routine time output life_status
 
 HEADER = philo.h
 
-CC = cc -fsanitize=thread -g
+CC = cc
 
 CFLAGS = -Wall -Wextra -Werror -I $(HEADER) -o2
 
