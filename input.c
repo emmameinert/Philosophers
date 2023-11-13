@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emeinert <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: emeinert <emeinert@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:04:19 by emeinert          #+#    #+#             */
-/*   Updated: 2023/06/20 16:07:34 by emeinert         ###   ########.fr       */
+/*   Updated: 2023/06/22 10:48:37 by emeinert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,21 @@ static int	ft_is_negative(char c)
 		return (0);
 }
 
+static int	ft_check_eating(char *argv)
+{
+	if (ft_atol(argv) == 0)
+	{
+		printf("Error: number is wrong:%s\n", argv);
+		return (1);
+	}
+	if (ft_atol(argv) > 2147483647 || ft_atol(argv) < -2147483648)
+	{
+		printf("Error: number is too big: %s\n", argv);
+		return (1);
+	}
+	return (0);
+}
+
 int	check_input(int argc, char **argv)
 {
 	int	i;
@@ -68,13 +83,13 @@ int	check_input(int argc, char **argv)
 	if ((ft_atol(argv[2]) < 60) || (ft_atol(argv[3]) < 60)
 		|| (ft_atol(argv[4]) < 60))
 	{
-		printf("Error: too little time\n");
+		printf("Error: time must be between 60 and INTMAX \n");
 		return (1);
 	}
-	if (argv[5] && ft_atol(argv[5]) == 0)
-	{
-		printf("Eating count is 0: Philosophers don't have to eat\n");
+	if (ft_check_eating(argv[2]) == 1 || ft_check_eating(argv[2]) == 1
+		|| ft_check_eating(argv[2]) == 1)
 		return (1);
-	}
+	if (argv[5] && ft_check_eating(argv[5]) == 1)
+		return (1);
 	return (0);
 }
